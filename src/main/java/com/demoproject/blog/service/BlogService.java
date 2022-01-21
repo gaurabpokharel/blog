@@ -19,19 +19,35 @@ public class BlogService {
        return blogRepository.save(blog);
     }
 
-    public Blog findBlogById(Long blogId) {
+    public Blog findBlogById(Long blogId) throws Exception {
         log.info("Inside findBlogById of BlogService");
-        return blogRepository.findByBlogId(blogId);
+
+        Blog obj= blogRepository.findByBlogId(blogId);
+        if(obj==null)
+        {
+            throw new Exception("Blog is not found with id"+blogId);
+        }
+        return obj;
     }
 
-    public void deleteBlogById(Long blogId) {
+    public void deleteBlogById(Long blogId) throws Exception {
         log.info("Inside deleteBlogById of BlogService");
+        Blog obj= blogRepository.findByBlogId(blogId);
+        if(obj==null)
+        {
+            throw new Exception("Blog is not found with id"+blogId);
+        }
         blogRepository.deleteById(blogId);
     }
 
-    public Blog updateBlogById(Blog blog, Long blogId) {
+    public Blog updateBlogById(Blog blog, Long blogId) throws Exception {
         log.info("Inside deleteBlogById of BlogService");
         blog.setBlogId(blogId);
+        Blog obj= blogRepository.findByBlogId(blogId);
+        if(obj==null)
+        {
+            throw new Exception("Blog is not found with id"+blogId);
+        }
         return blogRepository.save(blog);
     }
 }
